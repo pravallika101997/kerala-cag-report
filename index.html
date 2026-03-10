@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Kerala State Finances 2023-24 · CAG Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --saf:#E8600A; --saf2:#c44e07;
+  --teal:#0A7A7A; --teal2:#0d9494; --teal-light:#e0f4f4;
+  --ink:#0D1117; --ink2:#1a2330;
+  --gold:#C8991A; --gold2:#f5c842;
+  --red:#C0392B; --red2:#e74c3c;
+  --cream:#F8F5EE; --cream2:#EDE8DC;
+  --white:#FFFFFF;
+  --grey:#8899AA;
+  --border:rgba(255,255,255,.10);
+  --r:14px;
+  --font-display:'Cormorant Garamond',serif;
+  --font-body:'DM Sans',sans-serif;
+  --font-mono:'DM Mono',monospace;
+  /* Themeable tokens — dark defaults */
+  --bg:var(--ink);
+  --bg2:var(--ink2);
+  --surface:#1e2a38;
+  --text:#FFFFFF;
+  --text2:rgba(255,255,255,.75);
+  --text3:rgba(255,255,255,.45);
+  --nav-bg:rgba(13,17,23,.88);
+  --card-bg:rgba(255,255,255,.04);
+  --card-border:rgba(255,255,255,.08);
+  --ind-hover:rgba(255,255,255,.03);
+}
+[data-theme="light"]{
+  --ink:#F0F4F8; --ink2:#E2EBF3;
+  --bg:var(--ink); --bg2:var(--ink2);
+  --surface:#FFFFFF;
+  --text:#0D1117;
+  --text2:rgba(13,17,23,.75);
+  --text3:rgba(13,17,23,.45);
+  --grey:#5a6a7a;
+  --white:#FFFFFF;
+  --border:rgba(0,0,0,.08);
+  --nav-bg:rgba(255,255,255,.92);
+  --card-bg:rgba(0,0,0,.03);
+  --card-border:rgba(0,0,0,.08);
+  --ind-hover:rgba(0,0,0,.02);
+  color-scheme:light;
+}
+/* Theme toggle button */
+.theme-toggle{
+  display:flex;align-items:center;gap:7px;
+  padding:5px 12px;border-radius:100px;
+  font-size:.72rem;font-weight:600;font-family:var(--font-body);
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.8);
+  cursor:pointer;transition:all .2s;
+}
+[data-theme="light"] .theme-toggle{
+  background:rgba(0,0,0,.06);
+  border-color:rgba(0,0,0,.12);
+  color:rgba(13,17,23,.7);
+}
+.theme-toggle:hover{background:rgba(255,255,255,.15);color:#fff}
+[data-theme="light"] .theme-toggle:hover{background:rgba(0,0,0,.1);color:#0D1117}
+.theme-toggle svg{width:14px;height:14px;flex-shrink:0;transition:transform .4s ease}
+.theme-toggle:hover svg{transform:rotate(20deg)}
+html{font-family:var(--font-body);height:100%}
+body{background:var(--bg);color:var(--text);overflow-x:hidden;padding-top:56px;min-height:100vh;transition:background .3s,color .3s}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--ink2)}
+::-webkit-scrollbar-thumb{background:var(--teal);border-radius:99px}
+
+/* ══════════════════════
+   TOP NAV
+══════════════════════ */
+.topnav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:56px;
+  background:var(--nav-bg);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  transition:background .3s,border-color .3s;
+}
+.nav-logo{
+  font-family:var(--font-display);font-size:1.15rem;font-weight:700;
+  color:var(--text);letter-spacing:.02em;display:flex;align-items:center;gap:10px;
+}
+.nav-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(10,122,122,.5)}50%{box-shadow:0 0 0 6px rgba(10,122,122,0)}}
+.nav-pills{display:flex;gap:4px}
+.nav-pill{
+  padding:5px 14px;border-radius:100px;font-size:.73rem;font-weight:500;
+  cursor:pointer;transition:all .2s;border:1px solid transparent;
+  color:var(--text3);background:transparent;
+}
+.nav-pill:hover{color:var(--white);background:rgba(255,255,255,.07)}
+.nav-pill.active{color:var(--white);background:var(--teal);border-color:var(--teal)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-tag{
+  font-size:.65rem;font-family:var(--font-mono);font-weight:500;
+  padding:3px 8px;border-radius:4px;
+  background:rgba(200,153,26,.12);color:var(--gold2);
+  border:1px solid rgba(200,153,26,.2);
+}
+
+/* ══════════════════════
+   TAB SECTIONS
+══════════════════════ */
+.section{
+  display:none !important;
+  min-height:calc(100vh - 56px);
+  width:100%;
+  position:relative;
+  overflow-y:auto;
+}
+.section.tab-active{
+  display:flex !important;
+  flex-direction:column;
+  justify-content:center;
+  animation:tabFadeIn .3s ease;
+}
+@keyframes tabFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ══ THEME TRANSITIONS ══ */
+.section, .finding-card, .chart-card-big, .ins-card,
+.ind-table, .ind-row, .pie-container, .dstat-card,
+.cnav-btn, .chart-types, .ctype-btn, .topnav {
+  transition: background .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease;
+}
+
+
+/* ══════════════════════
+   S0 — COVER
+══════════════════════ */
+#s0{background:var(--ink)}
+#s0.tab-active{display:grid !important;grid-template-columns:1fr 1fr;}
+.cover-left{
+  background:var(--teal);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:60px;position:relative;overflow:hidden;
+}
+.cover-left::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 20%,rgba(255,255,255,.08) 0%,transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+.cover-eyebrow{
+  font-size:.68rem;font-family:var(--font-mono);font-weight:500;
+  color:rgba(255,255,255,.65);letter-spacing:.15em;text-transform:uppercase;
+  margin-bottom:28px;display:flex;align-items:center;gap:10px;
+  position:relative;z-index:1;
+}
+.cover-eyebrow::before{content:'';width:32px;height:1px;background:rgba(255,255,255,.4)}
+.cover-title{
+  font-family:var(--font-display);font-size:clamp(2.8rem,5vw,4.5rem);font-weight:700;
+  line-height:1.0;color:var(--white);margin-bottom:10px;
+  position:relative;z-index:1;
+}
+.cover-title em{font-style:italic;color:rgba(255,255,255,.75)}
+.cover-year{
+  font-family:var(--font-display);font-size:clamp(4rem,9vw,8rem);font-weight:700;
+  line-height:0.9;color:rgba(255,255,255,.12);margin-bottom:32px;
+  letter-spacing:-.04em;position:relative;z-index:1;pointer-events:none;
+}
+.cover-desc{
+  font-size:.9rem;color:rgba(255,255,255,.7);line-height:1.75;max-width:360px;
+  margin-bottom:40px;font-weight:300;position:relative;z-index:1;
+}
+.cover-cta{
+  display:flex;gap:12px;flex-wrap:wrap;
+  position:relative;z-index:2;
+}
+.btn-solid{
+  padding:11px 24px;border-radius:6px;font-size:.8rem;font-weight:600;
+  background:var(--white);color:var(--teal);cursor:pointer;border:none;
+  transition:all .2s;letter-spacing:.02em;
+}
+.btn-solid:hover{background:rgba(255,255,255,.88);transform:translateY(-1px)}
+.btn-ghost{
+  padding:11px 24px;border-radius:6px;font-size:.8rem;font-weight:600;
+  background:transparent;color:var(--white);cursor:pointer;
+  border:1.5px solid rgba(255,255,255,.4);transition:all .2s;
+}
+.btn-ghost:hover{border-color:var(--white);background:rgba(255,255,255,.08)}
+.cover-stats-bar{
+  margin-top:auto;padding-top:40px;border-top:1px solid rgba(255,255,255,.15);
+  display:flex;gap:32px;position:relative;z-index:1;
+}
+.cst-item{display:flex;flex-direction:column;gap:2px}
+.cst-val{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--white)}
+.cst-lbl{font-size:.65rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.1em;font-weight:500}
+
+.cover-right{
+  background:var(--ink2);
+  display:grid;grid-template-rows:1fr 1fr;
+}
+.cover-right-top{
+  padding:50px 50px 30px;
+  background:var(--ink);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.cover-right-top h2{
+  font-family:var(--font-display);font-size:2rem;font-weight:700;color:var(--white);
+  margin-bottom:16px;line-height:1.2;
+}
+.cover-right-top p{font-size:.85rem;color:var(--grey);line-height:1.7;max-width:400px}
+.cover-kpis{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06);
+}
+.kpi-cell{
+  background:var(--ink2);padding:28px 32px;
+  position:relative;overflow:hidden;cursor:pointer;transition:background .2s;
+}
+.kpi-cell:hover{background:#1e2a38}
+.kpi-cell::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:transparent;transition:background .3s;
+}
+.kpi-cell:nth-child(1)::after{background:var(--teal)}
+.kpi-cell:nth-child(2)::after{background:var(--saf)}
+.kpi-cell:nth-child(3)::after{background:var(--gold)}
+.kpi-cell:nth-child(4)::after{background:var(--red)}
+.kpi-label{font-size:.62rem;color:var(--grey);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:8px}
+.kpi-value{font-family:var(--font-display);font-size:1.9rem;font-weight:700;line-height:1;margin-bottom:4px}
+.kpi-sub{font-size:.72rem;color:var(--grey);margin-top:6px}
+.kpi-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:100px;font-size:.64rem;font-weight:600;margin-top:4px;
+}
+.badge-red{background:rgba(192,57,43,.15);color:#e74c3c;border:1px solid rgba(192,57,43,.2)}
+.badge-green{background:rgba(26,122,74,.15);color:#2ecc71;border:1px solid rgba(26,122,74,.2)}
+.badge-gold{background:rgba(200,153,26,.12);color:var(--gold2);border:1px solid rgba(200,153,26,.2)}
+.badge-teal{background:rgba(10,122,122,.15);color:#1dd2d2;border:1px solid rgba(10,122,122,.2)}
+
+/* ══════════════════════
+   S1 — CONTENTS TILES
+══════════════════════ */
+#s1{background:var(--bg2);padding:60px;}
+.contents-header{margin-bottom:48px}
+.contents-header h2{
+  font-family:var(--font-display);font-size:3rem;font-weight:700;color:var(--text);
+  margin-bottom:8px;
+}
+.contents-header p{font-size:.9rem;color:#667;line-height:1.6}
+.tiles-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,220px);
+  gap:16px;
+}
+.tile{
+  border-radius:var(--r);overflow:hidden;cursor:pointer;position:relative;
+  transition:transform .3s,box-shadow .3s;
+}
+.tile:hover{transform:translateY(-5px);box-shadow:0 20px 48px rgba(0,0,0,.18)}
+.tile-inner{
+  width:100%;height:100%;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:28px;position:relative;
+}
+.tile-inner::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.65) 0%, transparent 60%);
+  z-index:1;
+}
+.tile-num{
+  position:absolute;top:20px;left:24px;z-index:2;
+  font-family:var(--font-display);font-size:2.8rem;font-weight:700;
+  color:rgba(255,255,255,.18);line-height:1;
+}
+.tile-content{position:relative;z-index:2}
+.tile-label{font-size:.65rem;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:4px}
+.tile-title{font-family:var(--font-display);font-size:1.5rem;font-weight:600;color:var(--white);line-height:1.15}
+.tile-stat{font-size:.8rem;color:rgba(255,255,255,.7);margin-top:6px}
+
+/* Tile colors */
+.tile-1{background:var(--teal)}
+.tile-2{background:var(--ink2)}
+.tile-3{background:var(--saf)}
+.tile-4{background:#1a3a52}
+.tile-5{background:#2d1b5e}
+.tile-6{background:#3a1a10}
+
+.tile-1 .tile-inner::before{background:linear-gradient(135deg,rgba(0,0,0,.2),rgba(0,0,0,.5))}
+.tile-big{grid-column:span 2}
+
+/* ══════════════════════
+   S2 — KEY FINDINGS
+══════════════════════ */
+#s2{background:var(--bg2);padding:60px;}
+.section-header{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  margin-bottom:56px;gap:40px;
+}
+.sh-left{}
+.sh-eyebrow{
+  font-size:.65rem;font-family:var(--font-mono);color:var(--teal2);
+  text-transform:uppercase;letter-spacing:.14em;margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.sh-eyebrow::before{content:'';width:24px;height:1px;background:var(--teal)}
+.sh-title{font-family:var(--font-display);font-size:clamp(2rem,3.5vw,3rem);font-weight:700;color:var(--text);line-height:1.1;max-width:520px}
+.sh-right{max-width:340px;flex-shrink:0}
+.sh-desc{font-size:.85rem;color:var(--grey);line-height:1.75}
+
+.findings-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:48px;
+}
+.finding-card{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--r);padding:32px;position:relative;overflow:hidden;
+  transition:background .2s,border-color .2s;cursor:pointer;
+}
+.finding-card:hover{background:rgba(10,122,122,.06);border-color:rgba(10,122,122,.2)}
+.fc-accent{position:absolute;top:0;left:0;right:0;height:3px}
+.fc-accent-teal{background:var(--teal)}
+.fc-accent-saf{background:var(--saf)}
+.fc-accent-red{background:var(--red)}
+.fc-num{font-size:.6rem;font-family:var(--font-mono);color:var(--text3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:20px}
+.fc-bigval{
+  font-family:var(--font-display);font-size:2.8rem;font-weight:700;
+  line-height:1;margin-bottom:6px;
+}
+.fc-bigval.teal-c{color:var(--teal2)}
+.fc-bigval.saf-c{color:var(--saf)}
+.fc-bigval.red-c{color:var(--red2)}
+.fc-unit{font-size:.9rem;font-weight:400;opacity:.6;margin-left:2px}
+.fc-title{font-size:.88rem;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.3}
+.fc-desc{font-size:.78rem;color:var(--grey);line-height:1.7}
+
+/* Indicator table */
+.ind-table{border:1px solid var(--card-border);border-radius:var(--r);overflow:hidden}
+.ind-row{
+  display:grid;grid-template-columns:1fr auto 180px;align-items:center;
+  gap:20px;padding:14px 24px;border-bottom:1px solid var(--card-border);
+  transition:background .15s;
+}
+.ind-row:last-child{border-bottom:none}
+.ind-row:hover{background:var(--ind-hover)}
+.ind-name{font-size:.8rem;color:var(--text2)}
+.ind-val{font-family:var(--font-mono);font-size:.82rem;font-weight:500;white-space:nowrap}
+.ind-val.red-c{color:var(--red2)}
+.ind-val.saf-c{color:var(--saf)}
+.ind-val.green-c{color:#2ecc71}
+.ind-bar{height:5px;background:var(--card-border);border-radius:99px;overflow:hidden}
+.ind-bar-fill{height:100%;border-radius:99px;transition:width 1s ease .3s}
+
+/* ══════════════════════
+   S3 — CHARTS
+══════════════════════ */
+#s3{background:var(--bg);padding:60px;}
+.chart-layout{
+  display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start;
+}
+.chart-sidebar{}
+.chart-nav{display:flex;flex-direction:column;gap:6px;margin-bottom:24px}
+.cnav-btn{
+  display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:10px;
+  cursor:pointer;border:none;background:transparent;text-align:left;
+  transition:background .2s;color:var(--grey);font-family:var(--font-body);
+}
+.cnav-btn:hover{background:var(--card-bg);color:var(--text)}
+.cnav-btn.active{background:rgba(10,122,122,.12);color:var(--teal2);border:1px solid rgba(10,122,122,.2)}
+.cnav-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0;opacity:.6}
+.cnav-btn.active .cnav-dot{opacity:1}
+.cnav-txt{font-size:.79rem;font-weight:500;line-height:1.3}
+
+.chart-types{
+  display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;
+  padding:12px;background:var(--card-bg);border-radius:10px;
+  border:1px solid var(--card-border);
+}
+.ctype-btn{
+  padding:4px 10px;border-radius:6px;font-size:.68rem;font-weight:500;
+  border:1px solid var(--card-border);background:transparent;
+  color:var(--text3);cursor:pointer;transition:all .18s;
+  font-family:var(--font-body);
+}
+.ctype-btn:hover{color:var(--text);border-color:var(--grey)}
+.ctype-btn.active{background:var(--teal);border-color:var(--teal);color:var(--white)}
+
+.chart-main{}
+.chart-card-big{
+  background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:var(--r);padding:32px;margin-bottom:20px;
+}
+.cch-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;gap:16px}
+.cch-title{font-family:var(--font-display);font-size:1.4rem;font-weight:600;color:var(--text);line-height:1.2}
+.cch-sub{font-size:.72rem;color:var(--grey);margin-top:4px}
+.chart-wrap{position:relative}
+.chart-wrap canvas{border-radius:8px}
+.chart-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:16px}
+.cl-item{display:flex;align-items:center;gap:6px;font-size:.73rem;color:var(--text2)}
+.cl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* Insight cards below chart */
+.insight-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.ins-card{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:10px;padding:18px 16px;transition:background .2s;cursor:pointer;
+}
+.ins-card:hover{background:rgba(10,122,122,.06)}
+.ins-icon{font-size:1.4rem;margin-bottom:8px}
+.ins-title{font-size:.77rem;font-weight:600;color:var(--text);margin-bottom:5px;line-height:1.3}
+.ins-text{font-size:.7rem;color:var(--grey);line-height:1.6}
+
+/* ══════════════════════
+   S4 — DEBT / PIE
+══════════════════════ */
+#s4{background:var(--bg2);padding:60px;}
+#s4 .sh-title{color:var(--text)}
+#s4 .sh-eyebrow{color:var(--teal)}
+#s4 .sh-eyebrow::before{background:var(--teal)}
+#s4 .sh-desc{color:var(--grey)}
+
+.debt-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.pie-container{
+  background:var(--surface);border-radius:var(--r);padding:32px;
+  box-shadow:0 4px 24px rgba(0,0,0,.08);
+}
+.pie-title{font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--text);margin-bottom:20px}
+.pie-legend{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.pie-leg-item{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pie-leg-left{display:flex;align-items:center;gap:8px;flex:1;min-width:0}
+.pie-leg-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.pie-leg-name{font-size:.75rem;color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pie-leg-bar{flex:1;height:4px;background:var(--card-border);border-radius:99px;overflow:hidden;max-width:80px}
+.pie-leg-fill{height:100%;border-radius:99px}
+.pie-leg-pct{font-size:.72rem;font-family:var(--font-mono);font-weight:500;color:var(--grey);min-width:36px;text-align:right}
+
+.debt-stats{display:flex;flex-direction:column;gap:16px}
+.dstat-card{
+  background:var(--surface);border-radius:var(--r);padding:28px 30px;
+  box-shadow:0 4px 24px rgba(0,0,0,.06);
+  border-left:4px solid transparent;transition:transform .2s;
+}
+.dstat-card:hover{transform:translateX(4px)}
+.dstat-card.brd-teal{border-left-color:var(--teal)}
+.dstat-card.brd-red{border-left-color:var(--red)}
+.dstat-card.brd-saf{border-left-color:var(--saf)}
+.dstat-label{font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--grey);margin-bottom:8px}
+.dstat-val{font-family:var(--font-display);font-size:2rem;font-weight:700;color:var(--text);line-height:1;margin-bottom:4px}
+.dstat-desc{font-size:.77rem;color:var(--grey);line-height:1.5}
+.dstat-breach{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 10px;border-radius:100px;font-size:.65rem;font-weight:700;
+  background:rgba(192,57,43,.1);color:var(--red);border:1px solid rgba(192,57,43,.18);
+  margin-top:8px;
+}
+
+/* ══════════════════════
+   S5 — THANK YOU / END
+══════════════════════ */
+#s5{
+  background:var(--teal);
+  align-items:center;text-align:center;padding:60px 40px;
+}
+.end-eyebrow{font-size:.65rem;font-family:var(--font-mono);color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.15em;margin-bottom:20px}
+.end-title{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,5rem);font-weight:700;color:var(--white);line-height:1.05;margin-bottom:20px}
+.end-sub{font-size:.95rem;color:rgba(255,255,255,.7);line-height:1.7;max-width:520px;margin-bottom:40px}
+.end-meta{font-size:.72rem;font-family:var(--font-mono);color:rgba(255,255,255,.4);letter-spacing:.08em}
+
+/* scroll dots hidden in tab mode */
+.scroll-dots{display:none}
+
+/* ══════════════════════
+   ANIMATIONS
+══════════════════════ */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-l{opacity:0;transform:translateX(-24px);transition:opacity .65s ease,transform .65s ease}
+.reveal-l.visible{opacity:1;transform:none}
+.reveal-r{opacity:0;transform:translateX(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal-r.visible{opacity:1;transform:none}
+
+/* Stagger delays */
+.d1{transition-delay:.05s}.d2{transition-delay:.12s}.d3{transition-delay:.19s}
+.d4{transition-delay:.26s}.d5{transition-delay:.33s}.d6{transition-delay:.40s}
+
+/* ══════════════════════
+   TOOLTIP
+══════════════════════ */
+.tooltip-custom{
+  position:fixed;background:rgba(13,17,23,.95);color:var(--white);
+  padding:8px 14px;border-radius:8px;font-size:.72rem;
+  border:1px solid rgba(255,255,255,.12);pointer-events:none;
+  z-index:9999;opacity:0;transition:opacity .15s;backdrop-filter:blur(8px);
+  font-family:var(--font-body);
+}
+.tooltip-custom.show{opacity:1}
+
+/* ══════════════════════
+   CHATBOT
+══════════════════════ */
+.chat-fab{
+  position:fixed;bottom:28px;right:28px;z-index:800;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,var(--teal),var(--teal2));
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 24px rgba(10,122,122,.4);
+  transition:transform .2s,box-shadow .2s;
+}
+.chat-fab:hover{transform:scale(1.08);box-shadow:0 8px 32px rgba(10,122,122,.5)}
+.chat-fab svg{width:22px;height:22px;color:#fff}
+.chat-win{
+  position:fixed;bottom:90px;right:28px;z-index:800;
+  width:340px;background:var(--ink2);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.4);
+  display:flex;flex-direction:column;overflow:hidden;
+  opacity:0;pointer-events:none;transform:translateY(12px) scale(.97);
+  transition:all .25s cubic-bezier(.34,1.56,.64,1);
+}
+.chat-win.open{opacity:1;pointer-events:all;transform:none}
+.chat-head{
+  padding:14px 16px;background:var(--teal);
+  display:flex;align-items:center;gap:10px;
+}
+.chat-head-icon{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.chat-head-info{flex:1}
+.chat-head-name{font-size:.82rem;font-weight:600;color:#fff}
+.chat-head-sub{font-size:.65rem;color:rgba(255,255,255,.7)}
+.chat-close{background:none;border:none;color:rgba(255,255,255,.8);cursor:pointer;padding:4px;border-radius:6px;font-size:1.1rem}
+.chat-msgs{height:280px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.chat-msg{display:flex;flex-direction:column;gap:2px;max-width:90%}
+.chat-msg.ai{align-self:flex-start}
+.chat-msg.user{align-self:flex-end}
+.chat-bubble{
+  padding:9px 13px;border-radius:12px;font-size:.77rem;line-height:1.55;
+}
+.chat-msg.ai .chat-bubble{background:rgba(255,255,255,.07);color:var(--white);border-radius:4px 12px 12px 12px}
+.chat-msg.user .chat-bubble{background:var(--teal);color:#fff;border-radius:12px 4px 12px 12px}
+.chat-sugg{display:flex;flex-wrap:wrap;gap:5px;padding:0 14px 10px}
+.chat-sugg-btn{
+  font-size:.68rem;padding:4px 9px;border-radius:100px;
+  border:1px solid rgba(255,255,255,.15);background:transparent;
+  color:rgba(255,255,255,.65);cursor:pointer;transition:all .15s;font-family:var(--font-body);
+}
+.chat-sugg-btn:hover{background:rgba(10,122,122,.2);color:var(--teal2);border-color:var(--teal)}
+.chat-input-row{
+  display:flex;gap:6px;padding:10px 12px;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.chat-input-row textarea{
+  flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:8px;color:var(--white);font-size:.78rem;padding:8px 10px;
+  font-family:var(--font-body);resize:none;outline:none;height:36px;max-height:80px;
+}
+.chat-input-row textarea::placeholder{color:rgba(255,255,255,.35)}
+.chat-send{
+  width:36px;height:36px;border-radius:8px;background:var(--teal);
+  border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.chat-send svg{width:15px;height:15px;color:#fff}
+
+/* ══════════════════════
+   RESPONSIVE TWEAKS
+══════════════════════ */
+@media(max-width:900px){
+  #s0.tab-active{grid-template-columns:1fr !important}
+  .cover-right{display:none}
+  .tiles-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .tile-big{grid-column:span 2}
+  .findings-grid{grid-template-columns:1fr}
+  .chart-layout{grid-template-columns:1fr}
+  .debt-layout{grid-template-columns:1fr}
+  .insight-row{grid-template-columns:1fr 1fr}
+  .topnav{padding:0 16px}
+  .nav-pills{gap:2px}
+  .nav-pill{padding:4px 10px;font-size:.68rem}
+  #s1,#s2,#s3,#s4{padding:32px 24px}
+  .cover-left{padding:40px 24px}
+}
+
+/* Light mode section overrides */
+[data-theme="light"] #s0 { background: #f0f4f8; }
+[data-theme="light"] .cover-right { background: #e2ebf3; }
+[data-theme="light"] .cover-right-top { background: #f0f4f8; border-bottom-color: rgba(0,0,0,.06); }
+[data-theme="light"] .cover-right-top h2 { color: var(--text); }
+[data-theme="light"] .cover-right-top p { color: var(--grey); }
+[data-theme="light"] .kpi-grid { background: rgba(0,0,0,.04); }
+[data-theme="light"] .kpi-cell { background: #f8fafc; border-color: rgba(0,0,0,.07); }
+[data-theme="light"] .kpi-label { color: #667; }
+[data-theme="light"] .kpi-value { color: var(--text); }
+[data-theme="light"] .kpi-sub { color: #667; }
+[data-theme="light"] .cover-stats-bar { border-top-color: rgba(0,0,0,.12); }
+[data-theme="light"] .cst-lbl { color: rgba(0,0,0,.45); }
+[data-theme="light"] .section-header .sh-title { color: var(--text); }
+[data-theme="light"] .cnav-btn { color: #5a6a7a; }
+[data-theme="light"] .cnav-btn:hover { color: var(--text); }
+[data-theme="light"] .cnav-btn.active { color: var(--teal); }
+[data-theme="light"] .cch-sub { color: #667; }
+[data-theme="light"] .nav-pill:hover { background: rgba(0,0,0,.06); color: var(--text); }
+[data-theme="light"] .nav-logo { color: var(--text); }
+[data-theme="light"] .end-eyebrow, [data-theme="light"] .end-sub, [data-theme="light"] .end-meta { color: rgba(255,255,255,.8); }
+[data-theme="light"] .fc-bigval.teal-c { color: var(--teal); }
+[data-theme="light"] .ind-val { color: var(--text); }
+[data-theme="light"] .ind-val.red-c { color: var(--red); }
+[data-theme="light"] .ind-val.green-c { color: #1a7a45; }
+[data-theme="light"] .ind-name { color: var(--text2); }
+
+
+/* ══════════════════════
+   FILTER BARS
+══════════════════════ */
+.filter-bar{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:10px 14px;border-radius:10px;
+  background:var(--card-bg);border:1px solid var(--card-border);
+  margin-bottom:24px;
+}
+.filter-label{
+  font-size:.62rem;font-family:var(--font-mono);color:var(--text3);
+  text-transform:uppercase;letter-spacing:.12em;margin-right:4px;flex-shrink:0;
+}
+.filter-sep{width:1px;height:18px;background:var(--card-border);margin:0 4px;flex-shrink:0}
+.fchip{
+  padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:500;
+  cursor:pointer;border:1px solid var(--card-border);background:transparent;
+  color:var(--text3);font-family:var(--font-body);transition:all .18s;
+}
+.fchip:hover{color:var(--text);border-color:var(--grey)}
+.fchip.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.fchip.active-red{background:var(--red);border-color:var(--red);color:#fff}
+.fchip.active-saf{background:var(--saf);border-color:var(--saf);color:#fff}
+.fchip.active-gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.filter-count{
+  margin-left:auto;font-size:.68rem;font-family:var(--font-mono);
+  color:var(--text3);flex-shrink:0;
+}
+/* Findings hide/show */
+.finding-card{transition:opacity .25s,transform .25s,background .3s,border-color .3s;}
+.finding-card.f-hidden{display:none}
+.ind-row{transition:opacity .2s,background .15s;}
+.ind-row.f-hidden{display:none}
+/* Year range */
+.yr-range{display:flex;align-items:center;gap:10px;flex:1;max-width:260px}
+.yr-range input[type=range]{
+  flex:1;accent-color:var(--teal);cursor:pointer;
+  height:4px;
+}
+.yr-badge{
+  font-size:.68rem;font-family:var(--font-mono);
+  padding:3px 8px;border-radius:4px;
+  background:rgba(10,122,122,.12);color:var(--teal2);
+  border:1px solid rgba(10,122,122,.2);white-space:nowrap;
+}
+/* Dataset toggles */
+.ds-toggles{display:flex;gap:6px;flex-wrap:wrap}
+.ds-toggle{
+  display:flex;align-items:center;gap:5px;
+  padding:4px 10px;border-radius:6px;font-size:.71rem;font-weight:500;
+  cursor:pointer;border:1px solid var(--card-border);background:transparent;
+  color:var(--text2);font-family:var(--font-body);transition:all .18s;
+}
+.ds-toggle:hover{border-color:var(--grey)}
+.ds-toggle.ds-active{background:var(--card-bg);border-color:var(--grey)}
+.ds-toggle.ds-off{opacity:.4}
+.ds-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+/* Debt tabs */
+.debt-filter-tabs{display:flex;gap:6px;flex-wrap:wrap}
+.dftab{
+  padding:5px 14px;border-radius:100px;font-size:.72rem;font-weight:500;
+  cursor:pointer;border:1px solid var(--card-border);background:transparent;
+  color:var(--text3);font-family:var(--font-body);transition:all .18s;
+}
+.dftab:hover{color:var(--text);border-color:var(--grey)}
+.dftab.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.dstat-card.f-hidden{display:none}
+
+</style>
+</head>
+<body>
+
+<!-- TOOLTIP -->
+<div class="tooltip-custom" id="tooltip"></div>
+
+<!-- TOP NAV -->
+<nav class="topnav">
+  <div class="nav-logo">
+    <div class="nav-logo-dot"></div>
+    Kerala Finances
+  </div>
+  <div class="nav-pills">
+    <div class="nav-pill active" onclick="goSection(0)">Cover</div>
+    <div class="nav-pill" onclick="goSection(1)">Contents</div>
+    <div class="nav-pill" onclick="goSection(2)">Findings</div>
+    <div class="nav-pill" onclick="goSection(3)">Charts</div>
+    <div class="nav-pill" onclick="goSection(4)">Debt</div>
+    <div class="nav-pill" onclick="goSection(5)">Conclusion</div>
+  </div>
+  <div class="nav-right">
+    <span class="nav-tag">CAG Report No. 3 · 2025</span>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Toggle theme">
+      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+      <span id="themeLabel">Light</span>
+    </button>
+  </div>
+</nav>
+
+<!-- SCROLL DOTS -->
+<div class="scroll-dots" id="scrollDots">
+  <div class="sdot active" onclick="goSection(0)"></div>
+  <div class="sdot" onclick="goSection(1)"></div>
+  <div class="sdot" onclick="goSection(2)"></div>
+  <div class="sdot" onclick="goSection(3)"></div>
+  <div class="sdot" onclick="goSection(4)"></div>
+  <div class="sdot" onclick="goSection(5)"></div>
+</div>
+
+<!-- ════ S0: COVER ════ -->
+<div class="section tab-active" id="s0">
+  <div class="cover-left">
+    <div class="cover-eyebrow">CAG Report No. 3 of 2025 · Kerala Legislature</div>
+    <div class="cover-year">2024</div>
+    <div class="cover-title">State Finances<br/><em>Audit Report</em></div>
+    <p class="cover-desc reveal d2">A comprehensive examination of Kerala's fiscal health — revenues, expenditure, deficits, debt sustainability and budgetary management for the year ended 31 March 2024.</p>
+    <div class="cover-cta reveal d3">
+      <button class="btn-solid" onclick="goSection(1)">Explore Report →</button>
+      <button class="btn-ghost" onclick="goSection(3)">View Charts</button>
+    </div>
+    <div class="cover-stats-bar reveal d4">
+      <div class="cst-item">
+        <span class="cst-val" id="cov-gsdp">₹0</span>
+        <span class="cst-lbl">GSDP 2023-24</span>
+      </div>
+      <div class="cst-item">
+        <span class="cst-val" id="cov-rr">₹0</span>
+        <span class="cst-lbl">Revenue Receipts</span>
+      </div>
+      <div class="cst-item">
+        <span class="cst-val" id="cov-fd">₹0</span>
+        <span class="cst-lbl">Fiscal Deficit</span>
+      </div>
+    </div>
+  </div>
+  <div class="cover-right">
+    <div class="cover-right-top">
+      <h2>Supreme Audit Institution<br/>Government of Kerala</h2>
+      <p>Surveying Kerala's fiscal trajectory — from a booming GSDP to structural vulnerabilities in revenue and rising off-budget debt obligations.</p>
+    </div>
+    <div class="cover-kpis">
+      <div class="kpi-cell" onclick="goSection(2)">
+        <div class="kpi-label">GSDP Growth</div>
+        <div class="kpi-value" style="color:var(--teal2)">11.97%</div>
+        <div class="kpi-sub">₹11.46 Lakh Crore in 2023-24</div>
+        <div class="kpi-badge badge-teal">↑ +11.97%</div>
+      </div>
+      <div class="kpi-cell" onclick="goSection(2)">
+        <div class="kpi-label">Revenue Deficit</div>
+        <div class="kpi-value" style="color:var(--saf)">₹18,140 Cr</div>
+        <div class="kpi-sub">96.6% rise over previous year</div>
+        <div class="kpi-badge badge-red">↑ +96.6%</div>
+      </div>
+      <div class="kpi-cell" onclick="goSection(4)">
+        <div class="kpi-label">Liabilities / GSDP</div>
+        <div class="kpi-value" style="color:var(--gold2)">37.84%</div>
+        <div class="kpi-sub">Ceiling breached by 4.14%</div>
+        <div class="kpi-badge badge-red">⚠ Breach 33.7%</div>
+      </div>
+      <div class="kpi-cell" onclick="goSection(3)">
+        <div class="kpi-label">Committed Exp./RE</div>
+        <div class="kpi-value" style="color:var(--red2)">65%</div>
+        <div class="kpi-sub">Salaries + Pensions + Interest</div>
+        <div class="kpi-badge badge-gold">₹92,728 Cr</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ S1: CONTENTS ════ -->
+<div class="section" id="s1">
+  <div class="contents-header reveal">
+    <h2>Contents</h2>
+    <p>Six thematic sections · Kerala CAG State Finances Report 2023-24</p>
+  </div>
+  <div class="tiles-grid">
+    <div class="tile tile-1 tile-big reveal d1" onclick="goSection(0)">
+      <div class="tile-inner">
+        <div class="tile-num">1</div>
+        <div class="tile-content">
+          <div class="tile-label">Section 01</div>
+          <div class="tile-title">Cover &amp; Overview</div>
+          <div class="tile-stat">Key metrics at a glance</div>
+        </div>
+      </div>
+    </div>
+    <div class="tile tile-2 reveal d2" onclick="goSection(2)">
+      <div class="tile-inner">
+        <div class="tile-num">2</div>
+        <div class="tile-content">
+          <div class="tile-label">Section 02</div>
+          <div class="tile-title">Key Findings</div>
+          <div class="tile-stat">3 critical findings</div>
+        </div>
+      </div>
+    </div>
+    <div class="tile tile-3 reveal d3" onclick="goSection(3)">
+      <div class="tile-inner">
+        <div class="tile-num">3</div>
+        <div class="tile-content">
+          <div class="tile-label">Section 03</div>
+          <div class="tile-title">Revenue &amp; Charts</div>
+          <div class="tile-stat">5-year fiscal trends</div>
+        </div>
+      </div>
+    </div>
+    <div class="tile tile-4 reveal d4" onclick="goSection(3)">
+      <div class="tile-inner">
+        <div class="tile-num">4</div>
+        <div class="tile-content">
+          <div class="tile-label">Section 04</div>
+          <div class="tile-title">Committed Expenditure</div>
+          <div class="tile-stat">65% of revenue spent on obligations</div>
+        </div>
+      </div>
+    </div>
+    <div class="tile tile-5 reveal d5" onclick="goSection(4)">
+      <div class="tile-inner">
+        <div class="tile-num">5</div>
+        <div class="tile-content">
+          <div class="tile-label">Section 05</div>
+          <div class="tile-title">Debt &amp; Liabilities</div>
+          <div class="tile-stat">KFR Act ceiling breached</div>
+        </div>
+      </div>
+    </div>
+    <div class="tile tile-6 reveal d6" onclick="goSection(5)">
+      <div class="tile-inner">
+        <div class="tile-num">6</div>
+        <div class="tile-content">
+          <div class="tile-label">Section 06</div>
+          <div class="tile-title">Conclusion</div>
+          <div class="tile-stat">CAG closing statement</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ S2: KEY FINDINGS ════ -->
+<div class="section" id="s2">
+  <div class="section-header">
+    <div class="sh-left">
+      <div class="sh-eyebrow">Section 02 — Audit Findings</div>
+      <h2 class="sh-title">Fiscal Stress Despite Strong GSDP Growth</h2>
+    </div>
+    <div class="sh-right">
+      <p class="sh-desc">Kerala's GSDP grew 11.97% yet revenue and fiscal deficits widened. Outstanding liabilities breached KFR Act targets as GoI grants collapsed 55.9%.</p>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <span class="filter-label">Filter</span>
+    <button class="fchip active" onclick="filterFindings('all',this)">All</button>
+    <button class="fchip" onclick="filterFindings('deficit',this)" data-color="active-saf">Deficit</button>
+    <button class="fchip" onclick="filterFindings('debt',this)" data-color="active-red">Debt</button>
+    <button class="fchip" onclick="filterFindings('revenue',this)" data-color="active-gold">Revenue</button>
+    <div class="filter-sep"></div>
+    <span class="filter-label">Severity</span>
+    <button class="fchip active" onclick="filterSeverity('all',this)">All</button>
+    <button class="fchip" onclick="filterSeverity('critical',this)" data-color="active-red">Critical</button>
+    <button class="fchip" onclick="filterSeverity('warning',this)" data-color="active-saf">Warning</button>
+    <span class="filter-count" id="findingCount">3 of 3 findings</span>
+  </div>
+  <div class="findings-grid" id="findingsGrid">
+    <div class="finding-card reveal d1" data-cat="deficit" data-sev="critical">
+      <div class="fc-accent fc-accent-teal"></div>
+      <div class="fc-num">Finding 01 — Fiscal Deficit</div>
+      <div class="fc-bigval teal-c">₹34,258<span class="fc-unit">Cr</span></div>
+      <div class="fc-title">Fiscal Deficit rose ₹8,704 Cr in 2023-24</div>
+      <p class="fc-desc">Fiscal Deficit at 2.99% of GSDP. Borrowed funds used mainly for current consumption rather than capital creation, per CAG finding.</p>
+    </div>
+    <div class="finding-card reveal d2" data-cat="debt" data-sev="critical">
+      <div class="fc-accent fc-accent-saf"></div>
+      <div class="fc-num">Finding 02 — Debt Overshoot</div>
+      <div class="fc-bigval saf-c">37.84<span class="fc-unit">%</span></div>
+      <div class="fc-title">Overall Liabilities/GSDP breaches KFR Act</div>
+      <p class="fc-desc">Including off-budget ₹32,942 Cr via KIIFB &amp; KSSPL — exceeding the KFR Act ceiling of 33.70% by 4.14 percentage points.</p>
+    </div>
+    <div class="finding-card reveal d3" data-cat="revenue" data-sev="warning">
+      <div class="fc-accent fc-accent-red"></div>
+      <div class="fc-num">Finding 03 — Central Grants Crash</div>
+      <div class="fc-bigval red-c">-55.9<span class="fc-unit">%</span></div>
+      <div class="fc-title">GoI Grants fell from ₹27,378 Cr to ₹12,068 Cr</div>
+      <p class="fc-desc">Steepest drop in 5 years — causing revenue deficit to nearly double to ₹18,140 Cr, a 96.6% jump year-on-year.</p>
+    </div>
+  </div>
+
+  <div class="ind-table reveal">
+    <div class="ind-row" style="background:rgba(255,255,255,.04);padding:12px 24px">
+      <div class="ind-name" style="font-weight:700;color:var(--white);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em">Indicator</div>
+      <div class="ind-val" style="color:var(--grey);font-size:.7rem">2023-24 Value</div>
+      <div></div>
+    </div>
+    <div class="ind-row" data-cat="deficit" data-sev="critical"><span class="ind-name">Revenue Deficit (₹ Cr)</span><span class="ind-val red-c">₹18,140</span><div class="ind-bar"><div class="ind-bar-fill" style="width:0%;background:var(--red2)" data-w="53"></div></div></div>
+    <div class="ind-row" data-cat="deficit" data-sev="critical"><span class="ind-name">Fiscal Deficit (₹ Cr)</span><span class="ind-val saf-c">₹34,258</span><div class="ind-bar"><div class="ind-bar-fill" style="width:0%;background:var(--saf)" data-w="74"></div></div></div>
+    <div class="ind-row" data-cat="revenue" data-sev="critical"><span class="ind-name">Revenue Exp. / Revenue Receipts</span><span class="ind-val red-c">114.57%</span><div class="ind-bar"><div class="ind-bar-fill" style="width:0%;background:var(--red2)" data-w="100"></div></div></div>
+    <div class="ind-row" data-cat="revenue" data-sev="warning"><span class="ind-name">Committed Exp. / Revenue Exp.</span><span class="ind-val saf-c">65.01%</span><div class="ind-bar"><div class="ind-bar-fill" style="width:0%;background:var(--saf)" data-w="65"></div></div></div>
+    <div class="ind-row" data-cat="revenue" data-sev="warning"><span class="ind-name">Capital Expenditure / Total Exp.</span><span class="ind-val green-c">8.52%</span><div class="ind-bar"><div class="ind-bar-fill" style="width:0%;background:#2ecc71" data-w="52"></div></div></div>
+    <div class="ind-row" data-cat="revenue" data-sev="warning"><span class="ind-name">Own Tax Revenue Growth 2023-24</span><span class="ind-val green-c">3.28%</span><div class="ind-bar"><div class="ind-bar-fill" style="width:0%;background:#2ecc71" data-w="20"></div></div></div>
+    <div class="ind-row" data-cat="revenue" data-sev="warning"><span class="ind-name">Return on Government Investments</span><span class="ind-val" style="color:var(--gold2)">2.22%</span><div class="ind-bar"><div class="ind-bar-fill" style="width:0%;background:var(--gold)" data-w="14"></div></div></div>
+    <div class="ind-row" data-cat="debt" data-sev="critical"><span class="ind-name">Total Liabilities / GSDP (incl. OBB)</span><span class="ind-val red-c">37.84%</span><div class="ind-bar"><div class="ind-bar-fill" style="width:0%;background:var(--red2)" data-w="85"></div></div></div>
+  </div>
+</div>
+
+<!-- ════ S3: CHARTS ════ -->
+<div class="section" id="s3">
+  <div class="section-header">
+    <div class="sh-left">
+      <div class="sh-eyebrow">Section 03 — Data &amp; Analysis</div>
+      <h2 class="sh-title">Revenue, Expenditure &amp; Deficit Trends</h2>
+    </div>
+    <div class="sh-right">
+      <p class="sh-desc">Five-year fiscal data from Kerala Finance Accounts. Select a data view, switch chart types, and interact with the charts.</p>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <span class="filter-label">Year Range</span>
+    <div class="yr-range">
+      <span class="yr-badge" id="yrFrom">2019-20</span>
+      <input type="range" id="yrFrom-slider" min="0" max="4" value="0" oninput="applyYearFilter()">
+    </div>
+    <span style="font-size:.7rem;color:var(--text3)">→</span>
+    <div class="yr-range">
+      <input type="range" id="yrTo-slider" min="0" max="4" value="4" oninput="applyYearFilter()">
+      <span class="yr-badge" id="yrTo">2023-24</span>
+    </div>
+    <div class="filter-sep"></div>
+    <span class="filter-label">Compare</span>
+    <div class="ds-toggles" id="dsToggles"></div>
+  </div>
+  <div class="chart-layout">
+    <div class="chart-sidebar">
+      <div class="chart-nav" id="chartNav">
+        <button class="cnav-btn active" data-view="rr_re" onclick="switchChartView('rr_re',this)"><div class="cnav-dot"></div><span class="cnav-txt">Revenue Receipts vs Expenditure</span></button>
+        <button class="cnav-btn" data-view="deficit" onclick="switchChartView('deficit',this)"><div class="cnav-dot"></div><span class="cnav-txt">Deficit Trends</span></button>
+        <button class="cnav-btn" data-view="committed" onclick="switchChartView('committed',this)"><div class="cnav-dot"></div><span class="cnav-txt">Committed Expenditure</span></button>
+        <button class="cnav-btn" data-view="capital" onclick="switchChartView('capital',this)"><div class="cnav-dot"></div><span class="cnav-txt">Capital Expenditure</span></button>
+        <button class="cnav-btn" data-view="growth" onclick="switchChartView('growth',this)"><div class="cnav-dot"></div><span class="cnav-txt">Growth Rates</span></button>
+        <button class="cnav-btn" data-view="debt" onclick="switchChartView('debt',this)"><div class="cnav-dot"></div><span class="cnav-txt">Debt & Liabilities</span></button>
+      </div>
+      <div class="chart-types" id="chartTypes">
+        <button class="ctype-btn active" data-type="line" onclick="switchChartType('line',this)">Line</button>
+        <button class="ctype-btn" data-type="bar" onclick="switchChartType('bar',this)">Bar</button>
+        <button class="ctype-btn" data-type="area" onclick="switchChartType('area',this)">Area</button>
+        <button class="ctype-btn" data-type="doughnut" onclick="switchChartType('doughnut',this)">Donut</button>
+        <button class="ctype-btn" data-type="pie" onclick="switchChartType('pie',this)">Pie</button>
+        <button class="ctype-btn" data-type="radar" onclick="switchChartType('radar',this)">Radar</button>
+        <button class="ctype-btn" data-type="polarArea" onclick="switchChartType('polarArea',this)">Polar</button>
+        <button class="ctype-btn" data-type="scatter" onclick="switchChartType('scatter',this)">Scatter</button>
+      </div>
+    </div>
+
+    <div class="chart-main">
+      <div class="chart-card-big">
+        <div class="cch-header">
+          <div>
+            <div class="cch-title" id="chartTitle">Revenue Receipts vs Revenue Expenditure</div>
+            <div class="cch-sub">Finance Accounts, Govt of Kerala · 5-year trend</div>
+          </div>
+        </div>
+        <div class="chart-wrap" style="height:320px;position:relative">
+          <canvas id="mainChart"></canvas>
+        </div>
+        <div class="chart-legend" id="chartLeg"></div>
+      </div>
+
+      <div class="insight-row">
+        <div class="ins-card reveal d1">
+          <div class="ins-icon">📉</div>
+          <div class="ins-title">Revenue Receipts Fell 6.21%</div>
+          <p class="ins-text">Dropped from ₹1,32,725 Cr as GoI grants crashed 55.9%</p>
+        </div>
+        <div class="ins-card reveal d2">
+          <div class="ins-icon">📈</div>
+          <div class="ins-title">GSDP +11.97%</div>
+          <p class="ins-text">₹11.46 Lakh Crore · 33.4% above national per capita</p>
+        </div>
+        <div class="ins-card reveal d3">
+          <div class="ins-icon">⚠️</div>
+          <div class="ins-title">Capital Exp. Only 1.19%</div>
+          <p class="ins-text">Below national avg 1.65% · 74.57% utilisation rate</p>
+        </div>
+        <div class="ins-card reveal d4">
+          <div class="ins-icon">💰</div>
+          <div class="ins-title">Off-Budget Debt Hidden</div>
+          <p class="ins-text">₹32,942 Cr via KIIFB &amp; KSSPL pushes ratio to 37.84%</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ S4: DEBT ════ -->
+<div class="section" id="s4">
+  <div class="section-header">
+    <div class="sh-left">
+      <div class="sh-eyebrow">Section 05 — Debt &amp; Liabilities</div>
+      <h2 class="sh-title" style="color:var(--ink)">Debt Structure &amp; KFR Act Breaches</h2>
+    </div>
+    <div class="sh-right">
+      <p class="sh-desc" style="color:#556">Total outstanding liabilities reach ₹4,15,221 Cr — including hidden off-budget borrowings through KIIFB and KSSPL that push the ratio beyond legal limits.</p>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <span class="filter-label">View</span>
+    <div class="debt-filter-tabs">
+      <button class="dftab active" onclick="filterDebt('all',this)">All Components</button>
+      <button class="dftab" onclick="filterDebt('liabilities',this)">Liabilities</button>
+      <button class="dftab" onclick="filterDebt('kfr',this)">KFR Breach</button>
+      <button class="dftab" onclick="filterDebt('committed',this)">Committed Exp.</button>
+    </div>
+    <div class="filter-sep"></div>
+    <span class="filter-label">Composition</span>
+    <button class="fchip active" id="pieToggleBtn" onclick="togglePieChart(this)">Revenue Breakdown</button>
+    <button class="fchip" id="debtPieBtn" onclick="switchPieToDebt(this)">Debt Breakdown</button>
+  </div>
+  <div class="debt-layout">
+    <div class="pie-container reveal-l">
+      <div class="pie-title">Revenue Receipts Composition 2023-24</div>
+      <div style="height:240px;position:relative"><canvas id="pieChart"></canvas></div>
+      <div class="pie-legend" id="pieLegend"></div>
+    </div>
+    <div class="debt-stats">
+      <div class="dstat-card brd-teal reveal-r d1" data-dtype="liabilities">
+        <div class="dstat-label">Total Outstanding Liabilities (Finance Accounts)</div>
+        <div class="dstat-val" style="color:var(--teal)">₹4,15,221 Cr</div>
+        <p class="dstat-desc">36.23% of GSDP — primary borrowings, internal debt, and small savings. Growing from ₹2,72,567 Cr in 2019-20 at a CAGR of 11.1%.</p>
+      </div>
+      <div class="dstat-card brd-red reveal-r d2" data-dtype="kfr">
+        <div class="dstat-label">Overall Liability / GSDP (incl. Off-Budget)</div>
+        <div class="dstat-val" style="color:var(--red)">37.84%</div>
+        <p class="dstat-desc">KFR Act ceiling is 33.70%. Adding KIIFB (₹20,042 Cr) + KSSPL (₹12,901 Cr) creates a liability overhang of 4.14 percentage points.</p>
+        <div class="dstat-breach">⚠ Breach by 4.14% over KFR limit</div>
+      </div>
+      <div class="dstat-card brd-saf reveal-r d3" data-dtype="committed">
+        <div class="dstat-label">Committed Expenditure Breakdown</div>
+        <div class="dstat-val" style="color:var(--saf)">₹92,728 Cr</div>
+        <p class="dstat-desc">Salaries ₹40,098 Cr · Pensions ₹25,644 Cr · Interest ₹26,986 Cr. Together they consume 65% of all revenue expenditure.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ S5: END ════ -->
+<div class="section" id="s5">
+  <div class="end-eyebrow">Comptroller &amp; Auditor General of India</div>
+  <h2 class="end-title">Kerala State<br/><em>Finances</em><br/>2023–24</h2>
+  <p class="end-sub">"The State was unable to contain the revenue deficit and outstanding liability/GSDP ratio within the limits fixed by the XV Finance Commission."</p>
+  <div class="end-meta">CAG Report No. 3 of 2025 · Presented to Kerala Legislature · 09 October 2025</div>
+</div>
+
+<!-- CHAT FAB -->
+<button class="chat-fab" onclick="toggleChat()" id="chatFab">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<!-- CHAT WINDOW -->
+<div class="chat-win" id="chatWin">
+  <div class="chat-head">
+    <div class="chat-head-icon">🏛</div>
+    <div class="chat-head-info">
+      <div class="chat-head-name">Kerala Finances AI</div>
+      <div class="chat-head-sub">Ask about the CAG report</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-msgs" id="chatMsgs">
+    <div class="chat-msg ai"><div class="chat-bubble">Hello! I'm here to help you understand Kerala's State Finances 2023-24. What would you like to know?</div></div>
+  </div>
+  <div class="chat-sugg">
+    <button class="chat-sugg-btn" onclick="askSugg(this)">What is the fiscal deficit?</button>
+    <button class="chat-sugg-btn" onclick="askSugg(this)">Why did revenue fall?</button>
+    <button class="chat-sugg-btn" onclick="askSugg(this)">Off-budget borrowings</button>
+    <button class="chat-sugg-btn" onclick="askSugg(this)">Capital expenditure</button>
+  </div>
+  <div class="chat-input-row">
+    <textarea id="chatInput" placeholder="Ask anything…" rows="1"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}"
+      oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,80)+'px'"></textarea>
+    <button class="chat-send" onclick="sendChat()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════
+   DATA
+══════════════════════ */
+const YRS=['2019-20','2020-21','2021-22','2022-23','2023-24'];
+const D={
+  rr:[90224.67,97616.83,116640.24,132724.65,124486.15],
+  re:[104719.92,123446.33,146179.51,141950.93,142626.34],
+  rd:[14495.25,25829.50,29539.27,9226.28,18140.19],
+  fd:[23837.47,40969.69,46045.78,25554.54,34258.05],
+  pd:[4622.77,19994.33,22742.96,378.18,7271.83],
+  sal:[32942.28,28767.46,45780.08,39389.65,40097.69],
+  pen:[19064.29,18942.85,26898.69,26090.04,25644.24],
+  int:[19214.70,20975.36,23302.82,25176.36,26986.22],
+  ce:[8454.80,12889.65,14191.73,13996.56,13584.45],
+  debt:[272567,319618,348436,380477,415221],
+  gsdp_g:[3.13,-5.07,19.79,10.72,11.97],
+  rr_g:[-2.83,8.19,19.49,13.79,-6.21],
+  re_g:[-5.07,17.88,18.42,-2.89,0.48],
+};
+
+const COLORS=['#0A7A7A','#E8600A','#C8991A','#C0392B','#1a3a52','#2d1b5e','#2ecc71','#e74c3c'];
+
+const VIEWS={
+  rr_re:{title:'Revenue Receipts vs Revenue Expenditure',datasets:[
+    {label:'Revenue Receipts (₹ Cr)',data:D.rr,color:COLORS[0]},
+    {label:'Revenue Expenditure (₹ Cr)',data:D.re,color:COLORS[1]},
+  ],isAbs:true},
+  deficit:{title:'Deficit Trends — Revenue, Fiscal & Primary',datasets:[
+    {label:'Revenue Deficit',data:D.rd,color:COLORS[1]},
+    {label:'Fiscal Deficit',data:D.fd,color:COLORS[3]},
+    {label:'Primary Deficit',data:D.pd,color:COLORS[2]},
+  ],isAbs:true},
+  committed:{title:'Committed Expenditure — Salaries, Pensions & Interest',datasets:[
+    {label:'Salaries & Wages',data:D.sal,color:COLORS[0]},
+    {label:'Pensions',data:D.pen,color:COLORS[1]},
+    {label:'Interest Payments',data:D.int,color:COLORS[2]},
+  ],isAbs:true},
+  capital:{title:'Capital Expenditure Trend (₹ Crore)',datasets:[
+    {label:'Capital Expenditure',data:D.ce,color:COLORS[0]},
+  ],isAbs:true},
+  growth:{title:'Growth Rates — GSDP, Revenue Receipts & Expenditure (%)',datasets:[
+    {label:'GSDP Growth %',data:D.gsdp_g,color:COLORS[0]},
+    {label:'RR Growth %',data:D.rr_g,color:COLORS[1]},
+    {label:'RE Growth %',data:D.re_g,color:COLORS[2]},
+  ],isAbs:false},
+  debt:{title:'Total Outstanding Liabilities Trend (₹ Crore)',datasets:[
+    {label:'Total Liabilities',data:D.debt,color:COLORS[3]},
+  ],isAbs:true},
+};
+
+let curView='rr_re';
+let curType='line';
+let mainChart=null;
+let pieChart=null;
+
+/* ══════════════════════
+   CHART
+══════════════════════ */
+function getChartConfig(viewKey, type){
+  const v=VIEWS[viewKey];
+  const isCircular=['pie','doughnut','polarArea'].includes(type);
+  const isScatter=type==='scatter';
+  const isBar=type==='bar';
+  const isArea=type==='area';
+  const useType=isArea?'line':type;
+
+  const isLight=document.documentElement.getAttribute('data-theme')==='light';
+  Chart.defaults.color=isLight?'rgba(13,17,23,0.55)':'rgba(255,255,255,0.55)';
+  Chart.defaults.borderColor=isLight?'rgba(0,0,0,0.06)':'rgba(255,255,255,0.07)';
+
+  const dark=document.body.classList.contains('light');
+
+  if(isCircular){
+    const allData=v.datasets.map(ds=>ds.data[ds.data.length-1]);
+    const allLabels=v.datasets.map(ds=>ds.label);
+    return {
+      type:useType,
+      data:{
+        labels:allLabels,
+        datasets:[{data:allData,backgroundColor:COLORS,borderColor:'rgba(13,17,23,.3)',borderWidth:2}]
+      },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': ₹'+c.parsed.toLocaleString('en-IN')+(v.isAbs?' Cr':'%')}}},
+        animation:{duration:700}
+      }
+    };
+  }
+
+  const datasets=v.datasets.map((ds,i)=>{
+    const col=ds.color;
+    const hexA=(a)=>col+(Math.round(a*255).toString(16).padStart(2,'0'));
+    const base={
+      label:ds.label,
+      data:isScatter?ds.data.map((y,x)=>({x,y})):ds.data,
+      borderColor:col,
+      backgroundColor:isBar?col+'cc':(isArea?hexA(.12):col+'33'),
+      fill:isArea,
+      tension:.35,
+      pointRadius:5,
+      pointHoverRadius:8,
+      borderWidth:2.5,
+    };
+    return base;
+  });
+
+  return {
+    type:isScatter?'scatter':useType,
+    data:{labels:isScatter?undefined:(v._yrs||YRS), datasets},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'rgba(13,17,23,.95)',
+          borderColor:'rgba(255,255,255,.12)',borderWidth:1,
+          titleFont:{family:'DM Mono',size:11},
+          bodyFont:{family:'DM Sans',size:12},
+          callbacks:{
+            label:c=>' '+c.dataset.label+': '+(v.isAbs?'₹':'')+(+c.raw).toLocaleString('en-IN')+(v.isAbs?' Cr':'%')
+          }
+        }
+      },
+      scales:isCircular||type==='radar'?{}:{
+        x:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'rgba(255,255,255,.5)',font:{size:11,family:'DM Mono'}}},
+        y:{grid:{color:'rgba(255,255,255,.05)'},ticks:{color:'rgba(255,255,255,.5)',font:{size:11,family:'DM Mono'},
+          callback:v.isAbs?n=>'₹'+Math.round(n/1000)+'k':n=>n+'%'
+        }}
+      },
+      animation:{duration:700,easing:'easeOutCubic'}
+    }
+  };
+}
+
+function initMainChart(){
+  if(!VIEWS[curView]._yrs) rebuildViewsWithRange();
+  if(mainChart){mainChart.destroy();mainChart=null;}
+  const ctx=document.getElementById('mainChart');
+  ctx.style.height='100%';
+  mainChart=new Chart(ctx, getChartConfig(curView,curType));
+  updateLegend();
+  document.getElementById('chartTitle').textContent=VIEWS[curView].title;
+  buildDsToggles();
+}
+
+function switchChartView(key, btn){
+  curView=key;
+  document.querySelectorAll('.cnav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  initMainChart();
+}
+
+function switchChartType(type, btn){
+  curType=type;
+  document.querySelectorAll('.ctype-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  initMainChart();
+}
+
+function updateLegend(){
+  const leg=document.getElementById('chartLeg');
+  const isCircular=['pie','doughnut','polarArea'].includes(curType);
+  if(isCircular){leg.innerHTML='';return;}
+  const v=VIEWS[curView];
+  leg.innerHTML=v.datasets.map(ds=>`
+    <div class="cl-item">
+      <div class="cl-dot" style="background:${ds.color}"></div>
+      ${ds.label}
+    </div>`).join('');
+}
+
+/* PIE CHART (Revenue Receipts) */
+function initPieChart(){
+  const pieLabels=['Own Tax Revenue','Central Tax Share','Non-Tax Revenue','GoI Grants'];
+  const pieData=[59.71,17.47,13.13,9.69];
+  const pieColors=[COLORS[0],COLORS[2],COLORS[4],COLORS[1]];
+  const ctx=document.getElementById('pieChart');
+  if(pieChart){pieChart.destroy();}
+  pieChart=new Chart(ctx,{
+    type:'doughnut',
+    data:{
+      labels:pieLabels,
+      datasets:[{data:pieData,backgroundColor:pieColors,borderColor:'var(--white)',borderWidth:3,hoverOffset:8}]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,cutout:'62%',
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.parsed+'%'}}},
+      animation:{duration:900,easing:'easeOutBack'}
+    }
+  });
+  // Legend
+  const leg=document.getElementById('pieLegend');
+  leg.innerHTML=pieLabels.map((l,i)=>`
+    <div class="pie-leg-item">
+      <div class="pie-leg-left">
+        <div class="pie-leg-dot" style="background:${pieColors[i]}"></div>
+        <span class="pie-leg-name">${l}</span>
+      </div>
+      <div class="pie-leg-bar"><div class="pie-leg-fill" style="width:${pieData[i]}%;background:${pieColors[i]}"></div></div>
+      <span class="pie-leg-pct">${pieData[i]}%</span>
+    </div>`).join('');
+}
+
+/* ══════════════════════
+   COUNTER ANIMATION
+══════════════════════ */
+function animCounter(el, end, prefix, suffix, duration=1400){
+  const start=0; let startTime=null;
+  const step=ts=>{
+    if(!startTime) startTime=ts;
+    const p=Math.min((ts-startTime)/duration,1);
+    const ease=1-Math.pow(1-p,3);
+    const val=Math.round(start+(end-start)*ease);
+    el.textContent=prefix+(val).toLocaleString('en-IN')+suffix;
+    if(p<1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+/* ══════════════════════
+   TAB NAVIGATION
+══════════════════════ */
+const SECTIONS=['s0','s1','s2','s3','s4','s5'];
+let curSection=0;
+let chartsInited=false;
+let piePending=false;
+let barsAnimated=false;
+let countersDone=false;
+
+function goSection(n){
+  if(n===curSection) return;
+
+  // Hide old
+  const old=document.getElementById(SECTIONS[curSection]);
+  if(old) old.classList.remove('tab-active');
+
+  // Update pills
+  document.querySelectorAll('.nav-pill').forEach((p,i)=>p.classList.toggle('active',i===n));
+
+  curSection=n;
+  const el=document.getElementById(SECTIONS[n]);
+  el.classList.add('tab-active');
+  window.scrollTo(0,0);
+
+  // Trigger reveal animations
+  el.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(r=>{
+    r.classList.remove('visible');
+    setTimeout(()=>r.classList.add('visible'),60);
+  });
+
+  // Charts
+  if(n===3){
+    setTimeout(()=>{
+      if(!chartsInited){chartsInited=true;initMainChart();}
+      else if(mainChart){mainChart.resize();}
+    },100);
+  }
+
+  // Pie / debt
+  if(n===4){
+    setTimeout(()=>{
+      if(!piePending){piePending=true;initPieChart();}
+      else if(pieChart){pieChart.resize();}
+    },100);
+  }
+
+  // Findings bars
+  if(n===2 && !barsAnimated){
+    barsAnimated=true;
+    setTimeout(()=>{
+      document.querySelectorAll('.ind-bar-fill').forEach(b=>{
+        b.style.width=b.getAttribute('data-w')+'%';
+      });
+    },400);
+  }
+
+  // Cover counters
+  if(n===0 && !countersDone){
+    countersDone=true;
+    setTimeout(()=>{
+      animCounter(document.getElementById('cov-gsdp'),11.46,'₹',' L Cr');
+      animCounter(document.getElementById('cov-rr'),1.24,'₹',' L Cr');
+      animCounter(document.getElementById('cov-fd'),34258,'₹',' Cr');
+    },400);
+  }
+}
+
+// Initial load
+window.addEventListener('load',()=>{
+  // Make sure s0 is shown
+  document.getElementById('s0').classList.add('tab-active');
+
+  // Reveal s0 elements
+  document.querySelectorAll('#s0 .reveal,#s0 .reveal-l,#s0 .reveal-r').forEach(r=>{
+    setTimeout(()=>r.classList.add('visible'),150);
+  });
+
+  // Counters
+  if(!countersDone){
+    countersDone=true;
+    setTimeout(()=>{
+      animCounter(document.getElementById('cov-gsdp'),11.46,'₹',' L Cr');
+      animCounter(document.getElementById('cov-rr'),1.24,'₹',' L Cr');
+      animCounter(document.getElementById('cov-fd'),34258,'₹',' Cr');
+    },600);
+  }
+});
+
+/* ══════════════════════
+   CHATBOT
+══════════════════════ */
+let chatOpen=false;
+let chatHistory=[];
+
+const SYSTEM_PROMPT=`You are an expert analyst for the Kerala CAG State Finances Audit Report 2023-24 (CAG Report No. 3 of 2025). Answer concisely and helpfully. Key facts:
+- GSDP: ₹11,46,109 Cr (2023-24), growth 11.97%
+- Revenue Receipts: ₹1,24,486 Cr (-6.21%), Own Tax 59.71%, GoI Grants ₹12,068 Cr (fell 55.9%)
+- Revenue Expenditure: ₹1,42,626 Cr, RE/RR = 114.57%
+- Revenue Deficit: ₹18,140 Cr (+96.6%), Fiscal Deficit: ₹34,258 Cr (2.99% GSDP), Primary Deficit: ₹7,272 Cr
+- Committed Expenditure: ₹92,728 Cr = 65% RE; Salaries ₹40,098 Cr, Pensions ₹25,644 Cr, Interest ₹26,986 Cr
+- Capital Expenditure: ₹13,584 Cr (1.19% GSDP, below national avg 1.65%), utilisation 74.57%
+- Total Liabilities: ₹4,15,221 Cr; incl. off-budget KIIFB ₹20,042 Cr + KSSPL ₹12,901 Cr = overall 37.84% GSDP
+- KFR Act liability ceiling: 33.70% (BREACHED by 4.14%)
+- Per capita GSDP: ₹3,17,723 (33.4% above national avg)
+Keep responses brief (2-4 sentences). Use ₹ for amounts.`;
+
+function toggleChat(){
+  chatOpen=!chatOpen;
+  document.getElementById('chatWin').classList.toggle('open',chatOpen);
+}
+
+function addChatMsg(role, text){
+  const msgs=document.getElementById('chatMsgs');
+  const div=document.createElement('div');
+  div.className='chat-msg '+role;
+  div.innerHTML=`<div class="chat-bubble">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function addTyping(){
+  const msgs=document.getElementById('chatMsgs');
+  const div=document.createElement('div');
+  div.className='chat-msg ai'; div.id='typing-ind';
+  div.innerHTML='<div class="chat-bubble" style="opacity:.6">…</div>';
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+  return div;
+}
+
+async function sendChat(){
+  const inp=document.getElementById('chatInput');
+  const txt=inp.value.trim();
+  if(!txt)return;
+  inp.value='';inp.style.height='36px';
+  addChatMsg('user',txt);
+  chatHistory.push({role:'user',content:txt});
+  const typing=addTyping();
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,
+        system:SYSTEM_PROMPT,messages:chatHistory})
+    });
+    const data=await resp.json();
+    typing.remove();
+    const reply=data.content?.[0]?.text||'I couldn\'t get a response. Please try again.';
+    addChatMsg('ai',reply);
+    chatHistory.push({role:'assistant',content:reply});
+  }catch(e){typing.remove();addChatMsg('ai','Connection issue. Please try again.');}
+}
+
+function askSugg(btn){
+  document.getElementById('chatInput').value=btn.textContent;
+  toggleChat();
+  chatOpen=true;
+  document.getElementById('chatWin').classList.add('open');
+  setTimeout(sendChat,80);
+}
+
+/* ══════════════════════
+   FINDINGS FILTERS
+══════════════════════ */
+let activeCat='all', activeSev='all';
+
+function filterFindings(cat, btn){
+  activeCat=cat;
+  document.querySelectorAll('.filter-bar .fchip[onclick*="filterFindings"]').forEach(b=>{
+    b.className='fchip';
+  });
+  btn.classList.add(btn.dataset.color||'active');
+  applyFindingFilter();
+}
+
+function filterSeverity(sev, btn){
+  activeSev=sev;
+  document.querySelectorAll('.filter-bar .fchip[onclick*="filterSeverity"]').forEach(b=>{
+    b.className='fchip';
+  });
+  btn.classList.add(btn.dataset.color||'active');
+  applyFindingFilter();
+}
+
+function applyFindingFilter(){
+  let visCards=0, visCat=0;
+  // Filter finding cards
+  document.querySelectorAll('#findingsGrid .finding-card').forEach(card=>{
+    const cat=card.dataset.cat, sev=card.dataset.sev;
+    const show=(activeCat==='all'||cat===activeCat)&&(activeSev==='all'||sev===activeSev);
+    card.classList.toggle('f-hidden',!show);
+    if(show) visCards++;
+  });
+  // Filter indicator rows (skip header row)
+  document.querySelectorAll('.ind-table .ind-row[data-cat]').forEach(row=>{
+    const cat=row.dataset.cat, sev=row.dataset.sev;
+    const show=(activeCat==='all'||cat===activeCat)&&(activeSev==='all'||sev===activeSev);
+    row.classList.toggle('f-hidden',!show);
+    if(show) visCat++;
+  });
+  const total=document.querySelectorAll('#findingsGrid .finding-card').length;
+  document.getElementById('findingCount').textContent=visCards+' of '+total+' findings';
+}
+
+/* ══════════════════════
+   YEAR RANGE FILTER
+══════════════════════ */
+let yrFrom=0, yrTo=4;
+
+function applyYearFilter(){
+  const fs=document.getElementById('yrFrom-slider');
+  const ts=document.getElementById('yrTo-slider');
+  yrFrom=parseInt(fs.value);
+  yrTo=parseInt(ts.value);
+  // Swap if crossed
+  if(yrFrom>yrTo){ const tmp=yrFrom; yrFrom=yrTo; yrTo=tmp; fs.value=yrFrom; ts.value=yrTo; }
+  document.getElementById('yrFrom').textContent=YRS[yrFrom];
+  document.getElementById('yrTo').textContent=YRS[yrTo];
+  rebuildViewsWithRange();
+  initMainChart();
+}
+
+// Rebuild VIEWS data sliced to year range
+const VIEWS_ORIG={
+  rr_re:{title:'Revenue Receipts vs Revenue Expenditure',datasets:[
+    {label:'Revenue Receipts (₹ Cr)',data:D.rr,color:COLORS[0]},
+    {label:'Revenue Expenditure (₹ Cr)',data:D.re,color:COLORS[1]},
+  ],isAbs:true},
+  deficit:{title:'Deficit Trends — Revenue, Fiscal & Primary',datasets:[
+    {label:'Revenue Deficit',data:D.rd,color:COLORS[1]},
+    {label:'Fiscal Deficit',data:D.fd,color:COLORS[3]},
+    {label:'Primary Deficit',data:D.pd,color:COLORS[2]},
+  ],isAbs:true},
+  committed:{title:'Committed Expenditure — Salaries, Pensions & Interest',datasets:[
+    {label:'Salaries & Wages',data:D.sal,color:COLORS[0]},
+    {label:'Pensions',data:D.pen,color:COLORS[1]},
+    {label:'Interest Payments',data:D.int,color:COLORS[2]},
+  ],isAbs:true},
+  capital:{title:'Capital Expenditure Trend (₹ Crore)',datasets:[
+    {label:'Capital Expenditure',data:D.ce,color:COLORS[0]},
+  ],isAbs:true},
+  growth:{title:'Growth Rates — GSDP, Revenue Receipts & Expenditure (%)',datasets:[
+    {label:'GSDP Growth %',data:D.gsdp_g,color:COLORS[0]},
+    {label:'RR Growth %',data:D.rr_g,color:COLORS[1]},
+    {label:'RE Growth %',data:D.re_g,color:COLORS[2]},
+  ],isAbs:false},
+  debt:{title:'Total Outstanding Liabilities Trend (₹ Crore)',datasets:[
+    {label:'Total Liabilities',data:D.debt,color:COLORS[3]},
+  ],isAbs:true},
+};
+
+// Active dataset toggles per view
+const dsActiveState={};
+
+function rebuildViewsWithRange(){
+  Object.keys(VIEWS_ORIG).forEach(key=>{
+    const orig=VIEWS_ORIG[key];
+    if(!dsActiveState[key]) dsActiveState[key]=orig.datasets.map(()=>true);
+    VIEWS[key]={
+      title:orig.title,isAbs:orig.isAbs,
+      datasets:orig.datasets
+        .filter((_,i)=>dsActiveState[key][i])
+        .map(ds=>({...ds,data:ds.data.slice(yrFrom,yrTo+1)}))
+    };
+    // Store filtered YRS for chart
+    VIEWS[key]._yrs=YRS.slice(yrFrom,yrTo+1);
+  });
+}
+
+function buildDsToggles(){
+  const orig=VIEWS_ORIG[curView];
+  if(!dsActiveState[curView]) dsActiveState[curView]=orig.datasets.map(()=>true);
+  const wrap=document.getElementById('dsToggles');
+  if(!wrap) return;
+  wrap.innerHTML=orig.datasets.map((ds,i)=>`
+    <button class="ds-toggle ${dsActiveState[curView][i]?'ds-active':'ds-off'}"
+      onclick="toggleDs(${i},this)" style="--dot-c:${ds.color}">
+      <div class="ds-dot" style="background:${ds.color}"></div>
+      ${ds.label.split('(')[0].trim()}
+    </button>`).join('');
+}
+
+function toggleDs(idx, btn){
+  if(!dsActiveState[curView]) dsActiveState[curView]=VIEWS_ORIG[curView].datasets.map(()=>true);
+  // Prevent turning all off
+  const states=dsActiveState[curView];
+  const onCount=states.filter(Boolean).length;
+  if(states[idx] && onCount===1) return;
+  states[idx]=!states[idx];
+  btn.classList.toggle('ds-active',states[idx]);
+  btn.classList.toggle('ds-off',!states[idx]);
+  rebuildViewsWithRange();
+  initMainChart();
+}
+
+// Override switchChartView to also rebuild toggles
+const _origSwitchView=switchChartView;
+function switchChartView(key,btn){
+  curView=key;
+  document.querySelectorAll('.cnav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  rebuildViewsWithRange();
+  buildDsToggles();
+  initMainChart();
+}
+
+/* ══════════════════════
+   DEBT FILTERS
+══════════════════════ */
+function filterDebt(type, btn){
+  document.querySelectorAll('.dftab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.dstat-card').forEach(card=>{
+    const show=type==='all'||card.dataset.dtype===type;
+    card.classList.toggle('f-hidden',!show);
+  });
+}
+
+let showingRevenue=true;
+function togglePieChart(btn){
+  showingRevenue=true;
+  document.getElementById('pieToggleBtn').classList.add('active');
+  document.getElementById('debtPieBtn').classList.remove('active');
+  initPieChart();
+}
+
+function switchPieToDebt(btn){
+  showingRevenue=false;
+  document.getElementById('debtPieBtn').classList.add('active');
+  document.getElementById('pieToggleBtn').classList.remove('active');
+  // Show debt composition donut
+  if(pieChart){pieChart.destroy();}
+  const labels=['Internal Debt','Small Savings','Other Liabilities','Off-Budget (KIIFB+KSSPL)'];
+  const data=[290122,62148,30009,32942];
+  const colors=[COLORS[0],COLORS[1],COLORS[2],COLORS[3]];
+  const ctx=document.getElementById('pieChart');
+  pieChart=new Chart(ctx,{
+    type:'doughnut',
+    data:{labels,datasets:[{data,backgroundColor:colors,borderColor:'rgba(255,255,255,.15)',borderWidth:2,hoverOffset:8}]},
+    options:{
+      responsive:true,maintainAspectRatio:false,cutout:'60%',
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': ₹'+c.parsed.toLocaleString('en-IN')+' Cr'}}},
+      animation:{duration:700,easing:'easeOutCubic'}
+    }
+  });
+  const leg=document.getElementById('pieLegend');
+  const total=data.reduce((a,b)=>a+b,0);
+  leg.innerHTML=labels.map((l,i)=>`
+    <div class="pie-leg-item">
+      <div class="pie-leg-left">
+        <div class="pie-leg-dot" style="background:${colors[i]}"></div>
+        <span class="pie-leg-name">${l}</span>
+      </div>
+      <div class="pie-leg-bar"><div class="pie-leg-fill" style="width:${(data[i]/total*100).toFixed(1)}%;background:${colors[i]}"></div></div>
+      <span class="pie-leg-pct">${(data[i]/total*100).toFixed(1)}%</span>
+    </div>`).join('');
+  document.querySelector('.pie-title').textContent='Debt Composition 2023-24';
+}
+
+/* ══════════════════════
+   THEME TOGGLE
+══════════════════════ */
+const moonSVG=`<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>`;
+const sunSVG=`<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const isLight=html.getAttribute('data-theme')==='light';
+  if(isLight){
+    html.removeAttribute('data-theme');
+    document.getElementById('themeIcon').innerHTML=moonSVG;
+    document.getElementById('themeLabel').textContent='Light';
+  } else {
+    html.setAttribute('data-theme','light');
+    document.getElementById('themeIcon').innerHTML=sunSVG;
+    document.getElementById('themeLabel').textContent='Dark';
+  }
+  // Update Chart.js defaults and re-render
+  const nowLight=html.getAttribute('data-theme')==='light';
+  Chart.defaults.color=nowLight?'rgba(13,17,23,0.55)':'rgba(255,255,255,0.55)';
+  Chart.defaults.borderColor=nowLight?'rgba(0,0,0,0.06)':'rgba(255,255,255,0.07)';
+  if(chartsInited && mainChart){initMainChart();}
+  if(piePending && pieChart){initPieChart();}
+}
+// Init icon on load
+document.getElementById('themeIcon').innerHTML=moonSVG;
+</script>
+</body>
+</html>
